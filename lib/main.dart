@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutterkvm/features/auth/domain/entities/server_config.dart';
+import 'package:flutterkvm/features/auth/data/server_config_repository.dart';
+import 'package:flutterkvm/features/auth/presentation/server_config_list_page.dart';
 import 'package:flutterkvm/core/hooks/use_dio_client.dart';
 import 'package:flutterkvm/features/video/data/mjpeg_repository.dart';
 import 'package:flutterkvm/features/video/presentation/video_view.dart';
@@ -16,43 +18,49 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final repository = ServerConfigRepository();
     return MaterialApp(
       title: 'FlutterKVM',
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.blue),
         useMaterial3: true,
       ),
-      home: const DashboardPage(),
+      home: ServerConfigListPage(
+        repository: repository,
+        onSelect: (config) {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => DashboardPage(config: config),
+            ),
+          );
+        },
+      ),
     );
   }
 }
 
 class DashboardPage extends HookWidget {
+  final ServerConfig config;
   final MjpegRepository? mjpegRepository;
   final AtxRepository? atxRepository;
 
   const DashboardPage({
     super.key,
+    required this.config,
     this.mjpegRepository,
     this.atxRepository,
   });
 
   @override
   Widget build(BuildContext context) {
-    final config = useMemoized(() => ServerConfig(
-          host: '192.168.1.100', // Example host
-          username: 'admin',
-          password: 'admin',
-          isTrusted: true,
-        ));
-
     final dio = useDioClient(config);
     final MjpegRepository effectiveMjpegRepo = mjpegRepository ?? useMemoized(() => MjpegRepository(dio), [dio]);
     final AtxRepository effectiveAtxRepo = atxRepository ?? useMemoized(() => AtxRepository(dio), [dio]);
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('FlutterKVM'),
+        title: Text('FlutterKVM - ${config.host}'),
       ),
       body: SingleChildScrollView(
         child: Column(
