@@ -36,7 +36,7 @@ void main() {
       ),
     ));
 
-    expect(find.text('PiKVM Control'), findsOneWidget);
+    expect(find.text('FlutterKVM'), findsOneWidget);
     expect(find.text('Power Management'), findsOneWidget);
   });
 }

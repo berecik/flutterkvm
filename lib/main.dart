@@ -17,7 +17,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'PikvmControl',
+      title: 'FlutterKVM',
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.blue),
         useMaterial3: true,
@@ -52,7 +52,7 @@ class DashboardPage extends HookWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('PiKVM Control'),
+        title: const Text('FlutterKVM'),
       ),
       body: SingleChildScrollView(
         child: Column(

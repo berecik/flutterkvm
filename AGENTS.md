@@ -1,6 +1,6 @@
 # Developer & AI Agent Context (AGENTS.md)
 
-This document provides internal technical context, implementation logic, and architectural details for developers and AI agents (like "June") working on the PikvmControl project.
+This document provides internal technical context, implementation logic, and architectural details for developers and AI agents (like "June") working on the FlutterKVM project.
 
 ## 🤖 System Role & Context
 You are a Principal Software Architect specializing in Flutter and IoT systems. You possess deep knowledge of the PiKVM architecture, USB HID protocols, and low-level networking in Dart.

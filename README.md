@@ -1,4 +1,4 @@
-# PikvmControl
+# FlutterKVM
 
 A native Flutter client for PiKVM (V3 and V4) devices, designed for high-performance remote server management from mobile devices.
 
@@ -13,7 +13,7 @@ A native Flutter client for PiKVM (V3 and V4) devices, designed for high-perform
 ## 🏗 Architecture & System Design
 
 ### PiKVM Service Topology
-PikvmControl interfaces with a complex microservices architecture running on the PiKVM device (Arch Linux ARM):
+FlutterKVM interfaces with a complex microservices architecture running on the PiKVM device (Arch Linux ARM):
 - **KVMD (Keyboard Video Mouse Daemon):** The central orchestration layer (Python). Manages GPIO for ATX, USB Gadget subsystem for HID, and user authentication.
 - **uStreamer:** Optimized C-based video streamer. Provides ultra-low latency MJPEG feeds via `/stream`.
 - **Nginx:** Acts as a reverse proxy, terminating SSL and routing traffic to internal services.
@@ -42,8 +42,8 @@ Strictly uses `flutter_hooks`. Dependency injection is achieved via `useMemoized
 
 1. **Clone the repository:**
    ```bash
-   git clone https://github.com/your-repo/pikvmcontrol.git
-   cd pikvmcontrol
+   git clone https://github.com/berecik/flutterkvm.git
+   cd flutterkvm
    ```
 
 2. **Install dependencies:**
@@ -73,7 +73,7 @@ final config = ServerConfig(
 ```
 
 ### Authentication
-PikvmControl uses the `X-KVMD-User` and `X-KVMD-Passwd` headers for stateless authentication. If a TOTP secret is provided, the code is automatically appended to the password.
+FlutterKVM uses the `X-KVMD-User` and `X-KVMD-Passwd` headers for stateless authentication. If a TOTP secret is provided, the code is automatically appended to the password.
 
 ## 🧪 Testing
 
@@ -98,7 +98,7 @@ For development and integration testing without a physical device, a `MockPiKvm`
 ## 🛡 Security & Connectivity
 
 ### Authentication
-PikvmControl uses the `X-KVMD-User` and `X-KVMD-Passwd` headers for stateless authentication.
+FlutterKVM uses the `X-KVMD-User` and `X-KVMD-Passwd` headers for stateless authentication.
 - **2FA/TOTP:** If a TOTP secret is provided, the code is automatically generated and **concatenated** to the password string (e.g., `password123456`).
 - **SSL Certificates:** Handles self-signed certificates via `badCertificateCallback` when `isTrusted` is enabled in `ServerConfig`. We recommend a Trust-On-First-Use (TOFU) model for production implementations.
 
